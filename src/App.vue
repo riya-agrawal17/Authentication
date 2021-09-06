@@ -3,26 +3,28 @@
 </template>
 
 <script>
-import { onBeforeMount } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import firebase from 'firebase/compat/app';
+import {onBeforeMount} from 'vue';
+import { useRouter,useRoute } from 'vue-router';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-export default {
+export default{
   setup() {
     const router = useRouter();
     const route = useRoute();
 
-    onBeforeMount(() => {
-      firebase.auth().onAuthStateChange((user) => {
-        if (!user) {
+    onBeforeMount(()=>{
+      const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+        if(!user){
           router.replace('/login');
-        } else if (route.path == '/login' || route.path == '/register') {
+        }
+        else if(route.path=='/login' || route.path=="/register"){
           router.replace('/');
         }
-      });
-    });
+      })
+    })
   },
-};
+}
 </script>
 t
 

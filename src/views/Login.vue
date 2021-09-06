@@ -14,16 +14,19 @@
 
 <script>
 import { ref } from 'vue';
-import firebase from 'firebase/compat/app';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 export default {
   setup() {
     const email = ref('email');
     const password = ref('password');
     const Login = () => {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(email.value, password.value)
-        .then((data) => console.log(data))
+      const auth = getAuth();
+signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    console.log(userCredential.user);
+    // ...
+  })
         .catch((error) => alert(error.message));
     };
     return {
