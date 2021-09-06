@@ -1,11 +1,38 @@
 <template>
   <div class="login">
-    Login
+    <h1>Login</h1>
+    <form @submit.prevent="login">
+      <input type="text" placeholder="Email" v-model="email" />
+      <input type="password" placeholder="Password" v-model="password" />
+      <input type="submit" value="Login" />
+      <p>
+        Need an account?<router-link to="/register">Register Here</router-link>
+      </p>
+    </form>
   </div>
 </template>
 
 <script>
-export default {};
+import { ref } from 'vue';
+import firebase from 'firebase/compat/app';
+export default {
+  setup() {
+    const email = ref('email');
+    const password = ref('password');
+    const Login = () => {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email.value, password.value)
+        .then((data) => console.log(data))
+        .catch((error) => alert(error.message));
+    };
+    return {
+      Login,
+      email,
+      password,
+    };
+  },
+};
 </script>
 
 <style scoped></style>
