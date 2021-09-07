@@ -14,7 +14,7 @@ export default{
 
     onBeforeMount(()=>{
       const auth = getAuth();
-onAuthStateChanged(auth, (user) => {
+      onAuthStateChanged(auth, (user) => {
         if(!user){
           router.replace('/login');
         }

@@ -9,16 +9,18 @@
 
 <script>
 // @ is an alias to /src
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import { getAuth, signOut } from 'firebase/auth';
 export default {
   setup() {
     const email = ref('');
     const auth = getAuth();
-    const user = auth.currentUser;
-    if (user !== null) {
-      email.value = user.email;
-    }
+    onBeforeMount(() => {
+      const user = auth.currentUser;
+      if (user) {
+        email.value = user.email;
+      }
+    });
 
     const Logout = () => {
       signOut(auth)
