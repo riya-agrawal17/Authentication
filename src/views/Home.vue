@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Welcome, {{ name }}</h1>
+    <h1>Welcome, {{ email }}</h1>
     <router-link to="/about">About</router-link>
     <br />
     <button class="logout" @click="Logout">Logout</button>
@@ -9,28 +9,25 @@
 
 <script>
 // @ is an alias to /src
-import { ref, onBeforeMount } from 'vue';
-import firebase from 'firebase/compat/app';
-
+import { ref } from 'vue';
+import { getAuth, signOut } from 'firebase/auth';
 export default {
   setup() {
-    const name = ref('');
-    onBeforeMount(() => {
-      const user = firebase.auth().currentUser;
-      if (user) {
-        name.value = user.email.split('@')[0];
-      }
-    });
+    const email = ref('');
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user !== null) {
+      email.value = user.email;
+    }
 
     const Logout = () => {
-      firebase
-        .auth()
-        .signOut()
+      const auth = getAuth();
+      signOut(auth)
         .then(() => console.log('Signed out'))
         .catch((error) => alert(error.message));
     };
     return {
-      name,
+      email,
       Logout,
     };
   },
