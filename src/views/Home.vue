@@ -21,7 +21,6 @@ export default {
     }
 
     const Logout = () => {
-      const auth = getAuth();
       signOut(auth)
         .then(() => console.log('Signed out'))
         .catch((error) => alert(error.message));
