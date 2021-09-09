@@ -4,7 +4,7 @@
     <form @submit.prevent="login">
       <input type="text" placeholder="Email" v-model="email" />
       <input type="password" placeholder="Password" v-model="password" />
-      <input type="submit" value="Login" />
+      <button @click="Login">Login</button>
       <p>
         Need an account?<router-link to="/register">Register Here</router-link>
       </p>
@@ -21,7 +21,7 @@ export default {
     const password = ref('');
     const Login = () => {
       const auth = getAuth();
-      signInWithEmailAndPassword(auth, email, password)
+      signInWithEmailAndPassword(auth, email.value, password.value)
         .then((userCredential) => {
           // Signed in
           console.log(userCredential.user);
